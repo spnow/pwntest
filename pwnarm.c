@@ -8,7 +8,7 @@
 #include <sys/types.h>
 
 void ret_15(void) {
-  asm("mov r7, #173\n");
+  asm("mov r7, #119\n");
   asm("svc 0x00000000\n");
   asm("bx lr\n");
 }
